@@ -24,7 +24,8 @@ scrape_configs:
             kubernetes_pod_name:
             kubernetes_container_name:
     - regex:
-        expression: '^(?P<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{9}\+\d{2}:\d{2}) .*'
+        expression: '^(?P<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{9}Z) .*'
+        #expression: '^(?P<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{9}\+\d{2}:\d{2}) .*'
     - timestamp:
         format: RFC3339Nano
         source: time
