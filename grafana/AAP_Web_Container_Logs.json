@@ -1174,7 +1174,7 @@
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 100,
-            "gradientMode": "hue",
+            "gradientMode": "opacity",
             "hideFrom": {
               "graph": false,
               "legend": false,
@@ -1182,6 +1182,9 @@
               "viz": false
             },
             "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -1239,8 +1242,8 @@
             "uid": "$datasource"
           },
           "editorMode": "code",
-          "expr": "sum by (level) (count_over_time({$label_name=~\"$label_value\", job=~\"$job\", instance=~\"$instance\"} |  __error__=\"\" [$__interval]))",
-          "legendFormat": "Error Level {{level}}",
+          "expr": "sum by (level) (count_over_time({kubernetes_container_name=~\"tower-na1-web\", job=~\"pod-logs\", instance=~\"\"}  | regexp `(?P<timestamp>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3})\\s*(?P<level>\\w+)\\s*\\[(?P<session_id>[^\\]]+)\\] (?P<performance>\\S+)\\s*` | level!=\"\" |  __error__=\"\" [$__interval]))",
+          "legendFormat": "Error Level - {{level}}",
           "queryType": "range",
           "refId": "C"
         }
@@ -1932,7 +1935,7 @@
       "type": "table"
     }
   ],
-  "refresh": "",
+  "refresh": false,
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
@@ -1964,7 +1967,6 @@
           "uid": "$datasource"
         },
         "definition": "label_names()",
-        "error": {},
         "hide": 0,
         "includeAll": false,
         "label": "Label Name",
@@ -1987,7 +1989,6 @@
           "uid": "$datasource"
         },
         "definition": "label_values($label_name)",
-        "error": {},
         "hide": 0,
         "includeAll": true,
         "label": "Label Value",
@@ -2062,8 +2063,8 @@
     ]
   },
   "time": {
-    "from": "now-3h",
-    "to": "now"
+    "from": "2023-05-24T11:10:01.908Z",
+    "to": "2023-05-24T15:05:14.234Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -2081,6 +2082,6 @@
   "timezone": "",
   "title": "AAP - Web Container Logs",
   "uid": "Nz6kKgtGj",
-  "version": 18,
+  "version": 1,
   "weekStart": ""
 }
