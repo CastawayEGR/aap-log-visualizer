@@ -18,14 +18,12 @@ scrape_configs:
         - regex: 
             source: filename
             expression: '^.*/namespaces/(?P<kubernetes_namespace_name>.*)/pods/(?P<kubernetes_pod_name>.*)/(?P<kubernetes_container_name>.*)/.*/logs/.*.log'
-            #expression: '^.*/sosreport-(?P<node>.*)-\d{4}.*/var/log/pods/(?P<namespace>.*)_(?P<pod>.*)_.*/(?P<container>.*)/.*.log'
         - labels:
             kubernetes_namespace_name:
             kubernetes_pod_name:
             kubernetes_container_name:
     - regex:
-        expression: '^(?P<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{9}Z) .*'
-        #expression: '^(?P<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{9}\+\d{2}:\d{2}) .*'
+        expression: '^(?P<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{9}Z) (?P<message>.*)$'
     - timestamp:
         format: RFC3339Nano
         source: time
