@@ -10,28 +10,6 @@ clients:
 
 scrape_configs:
 
-- job_name: system
-  pipeline_stages:
-    - match:
-        selector: '{job="journalctl-logs"}'
-        stages:
-        - regex: 
-            source: filename
-            expression: '^.*/sosreport-(?P<node>.*)-\d{4}.*/sos_commands/logs/*'
-        - labels:
-            node:
-    - regex:
-        expression: '^(?P<time>\D{3} \d{2} \d{2}:\d{2}:\d{2}) .*'
-    - timestamp:
-        source: time
-        format: 'Jan 2 15:04:05'
-  static_configs:
-  - targets:
-      - localhost
-    labels:
-      job: journalctl-logs
-      __path__: /logs/sosreport-*/sos_commands/logs/*
-
 - job_name: pod
   pipeline_stages:
     - match:
@@ -39,12 +17,12 @@ scrape_configs:
         stages:
         - regex: 
             source: filename
-            expression: '^.*/sosreport-(?P<node>.*)-\d{4}.*/var/log/pods/(?P<namespace>.*)_(?P<pod>.*)_.*/(?P<container>.*)/.*.log'
+            expression: '^.*/namespaces/(?P<kubernetes_namespace_name>.*)/pods/(?P<kubernetes_pod_name>.*)/(?P<kubernetes_container_name>.*)/.*/logs/.*.log'
+            #expression: '^.*/sosreport-(?P<node>.*)-\d{4}.*/var/log/pods/(?P<namespace>.*)_(?P<pod>.*)_.*/(?P<container>.*)/.*.log'
         - labels:
-            node:
-            namespace:
-            pod:
-            container:
+            kubernetes_namespace_name:
+            kubernetes_pod_name:
+            kubernetes_container_name:
     - regex:
         expression: '^(?P<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{9}\+\d{2}:\d{2}) .*'
     - timestamp:
@@ -55,4 +33,4 @@ scrape_configs:
       - localhost
     labels:
       job: pod-logs
-      __path__: /logs/sosreport-*/var/log/pods/*/*/*.log
+      __path__: /logs/registry-redhat*/namespaces/*/pods/*/*/*/logs/*.log
