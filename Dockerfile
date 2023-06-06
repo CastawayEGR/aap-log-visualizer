@@ -25,6 +25,6 @@ COPY add-year-to-logs.py /opt/
 
 FROM ubi9/ubi:latest
 COPY --from=base /opt /opt
-RUN mkdir /metrics && mkdir /logs 
-EXPOSE 3000 9090 3100
+RUN mkdir /logs 
+EXPOSE 3000 3100
 CMD ["python3", "/opt/main.py"]
