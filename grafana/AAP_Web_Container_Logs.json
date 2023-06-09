@@ -1924,15 +1924,6 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": true,
-          "text": [
-            "tower-na1-web"
-          ],
-          "value": [
-            "tower-na1-web"
-          ]
-        },
         "datasource": {
           "uid": "$datasource"
         },
@@ -2017,10 +2008,6 @@
         "type": "adhoc"
       }
     ]
-  },
-  "time": {
-    "from": "2023-05-24T11:10:01.908Z",
-    "to": "2023-05-24T15:05:14.234Z"
   },
   "timepicker": {
     "refresh_intervals": [
