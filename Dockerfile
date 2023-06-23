@@ -18,8 +18,7 @@ RUN dnf install unzip -y \
     && mkdir -p /opt/loki/data && unzip /opt/loki-linux-amd64.zip -d /opt/loki && rm -f /opt/loki-linux-amd64.zip \
     && mkdir /opt/promtail && unzip /opt/promtail-linux-amd64.zip -d /opt/promtail && rm -f /opt/promtail-linux-amd64.zip
 COPY loki/loki-local-config.yaml /opt/loki/
-COPY loki/promtail-config.yaml /opt/promtail/
-COPY loki/promtail-config-year.yaml /opt/promtail/
+COPY loki/promtail-config* /opt/promtail/
 COPY main.py /opt/
 COPY add-year-to-logs.py /opt/
 
