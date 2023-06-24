@@ -8,13 +8,33 @@ import time
 import glob
 from string import Template
 
-def update_promtail_config(template_path, config_path, timezone):
-    with open(template_path, "r") as template_file:
-        template_content = template_file.read()
-    template = Template(template_content)
-    new_template = template.safe_substitute(timezone=timezone)
-    with open(config_path, "w") as config_file:
-        config_file.write(new_template)
+def update_promtail_config():
+    year = os.environ.get("YEAR")
+    if year:
+        config_path = "/opt/promtail/promtail-config-year.yaml"
+        add_year = ['python3', '/opt/add-year-to-logs.py', '-y', year]
+        subprocess.Popen(add_year).wait()
+    elif os.path.isdir("/logs/usr/share/zoneinfo"):
+        template_path = "/opt/promtail/promtail-config.yaml.template"
+        config_path = "/opt/promtail/promtail-config.yaml"
+        path_pattern = "/logs/usr/share/zoneinfo/*/*"
+        matching_paths = glob.glob(path_pattern)
+
+        for path in matching_paths:
+            directory, filename = path.rsplit("/", 2)[-2:]
+    
+        if directory and filename:
+            timezone = f"{directory}/{filename}"
+
+            with open(template_path, "r") as template_file:
+                template_content = template_file.read()
+            template = Template(template_content)
+            new_template = template.safe_substitute(timezone=timezone)
+            with open(config_path, "w") as config_file:
+                config_file.write(new_template)
+    else:
+        config_path = "/opt/promtail/promtail-config.yaml"
+    return config_path
 
 def start_grafana_server():
     grafana_args = [
@@ -31,23 +51,16 @@ def start_grafana_server():
 
 def start_loki_server():
     loki_args = [
-        "/opt/loki/loki-linux-amd64",
+        "/opt/loki/loki-linux",
         "--config.file",
         "/opt/loki/loki-local-config.yaml",
     ]
     loki = subprocess.Popen(loki_args)
     return loki
 
-def start_promtail(year):
-    if year:
-        promtail_config = "/opt/promtail/promtail-config-year.yaml"
-        add_year = ['python3', '/opt/add-year-to-logs.py', '-y', year]
-        subprocess.Popen(add_year).wait()
-    else:
-        promtail_config = "/opt/promtail/promtail-config.yaml"
-
+def start_promtail(promtail_config):
     promtail_args = [
-        "/opt/promtail/promtail-linux-amd64",
+        "/opt/promtail/promtail-linux",
         "-config.file",
         promtail_config,
     ]
@@ -70,22 +83,11 @@ def sigterm_handler(signum, frame):
     sys.exit(0)
 
 def main():
-    if os.path.isdir("/logs/usr/share/zoneinfo"):
-        path_pattern = "/logs/usr/share/zoneinfo/*/*"
-        matching_paths = glob.glob(path_pattern)
-
-        for path in matching_paths:
-            directory, filename = path.rsplit("/", 2)[-2:]
-    
-        if directory and filename:
-            timezone = f"{directory}/{filename}"
-            update_promtail_config("/opt/promtail/promtail-config.yaml.template", "/opt/promtail/promtail-config.yaml", timezone)
-
     grafana = start_grafana_server()
     loki = start_loki_server()
 
-    year = os.environ.get("YEAR")
-    promtail = start_promtail(year)
+    promtail_config = update_promtail_config()
+    promtail = start_promtail(promtail_config)
 
     signal.signal(signal.SIGTERM, sigterm_handler)
 
