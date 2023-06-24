@@ -8,7 +8,7 @@ import glob
 from string import Template
 import requests
 
-def update_promtail_config():i
+def update_promtail_config():
     """ Function to customize promtail config based on file type used """
     year = os.environ.get("YEAR")
     if year:
