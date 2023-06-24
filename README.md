@@ -5,7 +5,7 @@ Ansible Automation Platform Log Visualizer
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/CastawayEGR/aap-log-visualizer.svg?logoColor=brightgreen)](https://github.com/CastawayEGR/aap-log-visualizer)
 [![GitHub last commit](https://img.shields.io/github/last-commit/CastawayEGR/aap-log-visualizer.svg?logoColor=brightgreen)](https://github.com/CastawayEGR/aap-log-visualizer)
 
-Repository for a multi-arch container image that contains Grafana, Loki, and Promtail to visualize Ansible Automation Platform must-gathers and sosreports.
+Repository for multi-arch all-in-one container images that contains Grafana, Loki, and Promtail with included dashboards to visualize Ansible Automation Platform must-gather and sosreport logs.
 
 Build
 ------------
