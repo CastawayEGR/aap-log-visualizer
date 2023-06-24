@@ -1,13 +1,15 @@
 FROM ubi9/ubi:latest as base
 
+ARG ARCH=amd64
+
 ENV GRAFANA_VERSION=9.4.3
 ENV LOKI_VERSION=2.7.4
 
-ADD https://dl.grafana.com/oss/release/grafana-${GRAFANA_VERSION}.linux-amd64.tar.gz /opt
-ADD https://github.com/grafana/loki/releases/download/v${LOKI_VERSION}/loki-linux-amd64.zip /opt
-ADD https://github.com/grafana/loki/releases/download/v${LOKI_VERSION}/promtail-linux-amd64.zip /opt
+ADD https://dl.grafana.com/oss/release/grafana-${GRAFANA_VERSION}.linux-${ARCH}.tar.gz /opt
+ADD https://github.com/grafana/loki/releases/download/v${LOKI_VERSION}/loki-linux-${ARCH}.zip /opt
+ADD https://github.com/grafana/loki/releases/download/v${LOKI_VERSION}/promtail-linux-${ARCH}.zip /opt
 
-RUN tar xf /opt/grafana-${GRAFANA_VERSION}.linux-amd64.tar.gz -C /opt && rm -f /opt/grafana-${GRAFANA_VERSION}.linux-amd64.tar.gz \
+RUN tar xf /opt/grafana-${GRAFANA_VERSION}.linux-${ARCH}.tar.gz -C /opt && rm -f /opt/grafana-${GRAFANA_VERSION}.linux-${ARCH}.tar.gz \
     && mv /opt/grafana-${GRAFANA_VERSION} /opt/grafana && mkdir -p /opt/grafana/conf/provisioning/{datasources,dashboards} \
     && mkdir /opt/grafana/dashboards
 COPY grafana/grafana.ini /opt/grafana/conf/
@@ -15,8 +17,8 @@ COPY grafana/datasources.yml /opt/grafana/conf/provisioning/datasources/
 COPY grafana/dashboard_provisioning.yml /opt/grafana/conf/provisioning/dashboards/
 COPY grafana/*.json /opt/grafana/dashboards/
 RUN dnf install unzip -y \
-    && mkdir -p /opt/loki/data && unzip /opt/loki-linux-amd64.zip -d /opt/loki && rm -f /opt/loki-linux-amd64.zip \
-    && mkdir /opt/promtail && unzip /opt/promtail-linux-amd64.zip -d /opt/promtail && rm -f /opt/promtail-linux-amd64.zip \
+    && mkdir -p /opt/loki/data && unzip /opt/loki-linux-${ARCH}.zip -d /opt/loki && rm -f /opt/loki-linux-${ARCH}.zip \
+    && mkdir /opt/promtail && unzip /opt/promtail-linux-${ARCH}.zip -d /opt/promtail && rm -f /opt/promtail-linux-${ARCH}.zip \
     && find /opt/loki -type f -name 'loki-linux-*64' -exec mv {} /opt/loki/loki-linux \; \
     && find /opt/promtail -type f -name 'promtail-linux-*64' -exec mv {} /opt/promtail/promtail-linux \;
 COPY loki/loki-local-config.yaml /opt/loki/
