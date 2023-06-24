@@ -25,11 +25,11 @@ def update_promtail_config():
         if directory and filename:
             timezone = f"{directory}/{filename}"
 
-            with open(template_path, "r") as template_file:
+            with open(template_path, "r", encoding="utf8") as template_file:
                 template_content = template_file.read()
             template = Template(template_content)
             new_template = template.safe_substitute(timezone=timezone)
-            with open(config_path, "w") as config_file:
+            with open(config_path, "w", encoding="utf8") as config_file:
                 config_file.write(new_template)
     else:
         config_path = "/opt/promtail/promtail-config.yaml"
@@ -70,7 +70,7 @@ def start_promtail(promtail_config):
 def check_ready():
     while True:
         try:
-            response = requests.get("http://localhost:3100/ready")
+            response = requests.get("http://localhost:3100/ready", timeout=5)
             if response.text.strip() == "ready":
                 break
         except Exception:
