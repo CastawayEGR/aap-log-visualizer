@@ -16,7 +16,9 @@ COPY grafana/dashboard_provisioning.yml /opt/grafana/conf/provisioning/dashboard
 COPY grafana/*.json /opt/grafana/dashboards/
 RUN dnf install unzip -y \
     && mkdir -p /opt/loki/data && unzip /opt/loki-linux-amd64.zip -d /opt/loki && rm -f /opt/loki-linux-amd64.zip \
-    && mkdir /opt/promtail && unzip /opt/promtail-linux-amd64.zip -d /opt/promtail && rm -f /opt/promtail-linux-amd64.zip
+    && mkdir /opt/promtail && unzip /opt/promtail-linux-amd64.zip -d /opt/promtail && rm -f /opt/promtail-linux-amd64.zip \
+    && find /opt/loki -type f -name 'loki-linux-*64' -exec mv {} /opt/loki/loki-linux \; \
+    && find /opt/promtail -type f -name 'promtail-linux-*64' -exec mv {} /opt/promtail/promtail-linux \;
 COPY loki/loki-local-config.yaml /opt/loki/
 COPY loki/promtail-config* /opt/promtail/
 COPY main.py /opt/
