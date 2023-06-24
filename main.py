@@ -1,3 +1,4 @@
+""" Python script to configure promtail and run grafana, loki, and promtail """
 import os
 import signal
 import sys
@@ -7,11 +8,13 @@ import glob
 from string import Template
 import requests
 
-def update_promtail_config():
+def update_promtail_config():i
+    """ Function to customize promtail config based on file type used """
     year = os.environ.get("YEAR")
     if year:
         config_path = "/opt/promtail/promtail-config-year.yaml"
         add_year = ['python3', '/opt/add-year-to-logs.py', '-y', year]
+        # pylint: disable=R1732
         subprocess.Popen(add_year).wait()
     elif os.path.isdir("/logs/usr/share/zoneinfo"):
         template_path = "/opt/promtail/promtail-config.yaml.template"
@@ -36,6 +39,7 @@ def update_promtail_config():
     return config_path
 
 def start_grafana_server():
+    """ Function to start Grafana process """
     grafana_args = [
         "/opt/grafana/bin/grafana-server",
         "-homepath",
@@ -45,29 +49,34 @@ def start_grafana_server():
         "$@",
         "cfg:default.log.mode=console",
     ]
+    # pylint: disable=R1732
     grafana = subprocess.Popen(grafana_args)
     return grafana
 
 def start_loki_server():
+    """ Function to start Loki process """
     loki_args = [
         "/opt/loki/loki-linux",
         "--config.file",
         "/opt/loki/loki-local-config.yaml",
     ]
+    # pylint: disable=R1732
     loki = subprocess.Popen(loki_args)
     return loki
 
 def start_promtail(promtail_config):
+    """ Function to start Promtail process """
     promtail_args = [
         "/opt/promtail/promtail-linux",
         "-config.file",
         promtail_config,
     ]
-
+    # pylint: disable=R1732
     promtail = subprocess.Popen(promtail_args)
     return promtail
 
 def check_ready():
+    """ Function to check if Loki is running and in a ready state """
     while True:
         try:
             response = requests.get("http://localhost:3100/ready", timeout=5)
@@ -78,10 +87,12 @@ def check_ready():
             continue
 
 def sigterm_handler():
+    """ Handler for SIGTERM """
     print("AAP log visualizer is shutting down!")
     sys.exit(0)
 
 def main():
+    """ Main function to run Grafana, Loki, and Promtail """
     grafana = start_grafana_server()
     loki = start_loki_server()
 
