@@ -73,7 +73,7 @@ def check_ready():
             response = requests.get("http://localhost:3100/ready", timeout=5)
             if response.text.strip() == "ready":
                 break
-        except Exception:
+        except requests.exceptions.RequestException:
             time.sleep(10)
             continue
 
@@ -95,7 +95,7 @@ def main():
             grafana.wait()
             loki.wait()
             promtail.wait()
-        except Exception as e:
+        except subprocess.SubprocessError as e:
             print("An exception occurred:", str(e))
             sys.exit(1)
 
