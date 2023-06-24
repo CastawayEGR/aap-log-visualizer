@@ -1,12 +1,11 @@
 import os
-import requests
 import signal
 import sys
 import subprocess
-import shutil
 import time
 import glob
 from string import Template
+import requests
 
 def update_promtail_config():
     year = os.environ.get("YEAR")
@@ -22,7 +21,7 @@ def update_promtail_config():
 
         for path in matching_paths:
             directory, filename = path.rsplit("/", 2)[-2:]
-    
+
         if directory and filename:
             timezone = f"{directory}/{filename}"
 
@@ -78,7 +77,7 @@ def check_ready():
             time.sleep(10)
             continue
 
-def sigterm_handler(signum, frame):
+def sigterm_handler():
     print("AAP log visualizer is shutting down!")
     sys.exit(0)
 
