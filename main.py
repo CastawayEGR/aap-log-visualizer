@@ -32,6 +32,8 @@ def update_promtail_config():
     with open(config_path, "w", encoding="utf8") as config_file:
         config_file.write(new_template)
 
+    return config_path    
+
 
 def start_grafana_server():
     """ Function to start Grafana process """
@@ -96,7 +98,7 @@ def main():
     grafana = start_grafana_server()
     loki = start_loki_server()
     check_ready()
-    promtail_config = "/opt/promtail/promtail-config.yaml"
+    promtail_config = update_promtail_config()
     promtail = start_promtail(promtail_config)
 
     signal.signal(signal.SIGTERM, sigterm_handler)
