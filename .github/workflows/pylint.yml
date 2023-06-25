@@ -20,5 +20,4 @@ jobs:
         pip install pylint requests
     - name: Analysing the code with pylint
       run: |
-        pylint --rcfile=.pylintrc $(git ls-files 'main.py')
-        #pylint --rcfile=.pylintrc $(git ls-files '*.py')
+        pylint --rcfile=.pylintrc $(git ls-files '*.py')
