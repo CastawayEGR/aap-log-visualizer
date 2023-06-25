@@ -29,7 +29,6 @@ jobs:
     - name: Analyze the code with flake8
       run: |
         flake8 --max-line-length=100 $(git ls-files '*.py')
-
     - name: Test code with pytest
       run: |
         pytest
