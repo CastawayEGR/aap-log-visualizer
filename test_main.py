@@ -12,6 +12,18 @@ from main import (
 )
 
 
+@pytest.fixture
+def mock_response():
+    """ Mock the response from the requests.get function """
+    class MockResponse:
+        """ Class to handle response.text """
+        def __init__(self, text):
+            self.text = text
+            self.status_code = 200
+
+    return MockResponse("ready")
+
+
 def test_update_promtail_config(mock_template_file="Timezone: America/New_York"):
     """ Test the update_promtail_config function """
     # Set up template_content
@@ -70,7 +82,8 @@ def test_start_grafana_server():
         assert grafana_process == process_mock
 
 
-def test_check_ready(mock_response="ready"):
+def test_check_ready(mock_response):
+    # pylint: disable=redefined-outer-name
     """ Test the loki api check_ready function """
     # Mock the requests.get function to return the desired response
     with patch("requests.get") as mock_get:

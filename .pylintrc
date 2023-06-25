@@ -3,3 +3,6 @@ good-names=
     i,
     e,
     logger,
+
+[DESIGN]
+min-public-methods=0
