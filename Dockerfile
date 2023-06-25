@@ -24,7 +24,6 @@ RUN dnf install unzip -y \
 COPY loki/loki-local-config.yaml /opt/loki/
 COPY loki/promtail-config* /opt/promtail/
 COPY main.py /opt/
-COPY add-year-to-logs.py /opt/
 
 FROM registry.access.redhat.com/ubi9/ubi:latest
 COPY --from=base /opt /opt
