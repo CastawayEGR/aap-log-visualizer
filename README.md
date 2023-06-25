@@ -26,6 +26,14 @@ make ARCH=arm64 build
 Run
 ----------------
 
+Run prebuilt image from Quay.io.
+
+~~~
+podman run --name aaplv -d -v ./{must-gather/sosreport}_dir:/logs:Z -p 3000:3000 quay.io/castawayegr/aap-log-visualizer:latest
+~~~
+
+Run locally build image using Makefile.
+
 ~~~
 podman run --name aaplv -d -v ./{must-gather/sosreport}_dir:/logs:Z -p 3000:3000 localhost:/aap-log-visualizer:latest
 ~~~
