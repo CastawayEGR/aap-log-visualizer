@@ -28,4 +28,4 @@ jobs:
         pylint --rcfile=.pylintrc $(git ls-files '*.py')
     - name: Analyze the code with flake8
       run: |
-        flake8 $(git ls-files '*.py')
+        flake8 --max-line-length=100 $(git ls-files '*.py')
