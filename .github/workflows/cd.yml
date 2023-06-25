@@ -33,4 +33,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: castawayegr/aap-log-visualizer:latest
+          tags: quay.io/castawayegr/aap-log-visualizer:latest
