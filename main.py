@@ -8,6 +8,7 @@ import glob
 from string import Template
 import requests
 
+
 def update_promtail_config():
     """ Function to customize promtail config based on file type used """
     if os.path.isdir("/logs/usr/share/zoneinfo"):
@@ -31,6 +32,7 @@ def update_promtail_config():
     with open(config_path, "w", encoding="utf8") as config_file:
         config_file.write(new_template)
 
+
 def start_grafana_server():
     """ Function to start Grafana process """
     grafana_args = [
@@ -46,6 +48,7 @@ def start_grafana_server():
     grafana = subprocess.Popen(grafana_args)
     return grafana
 
+
 def start_loki_server():
     """ Function to start Loki process """
     loki_args = [
@@ -56,6 +59,7 @@ def start_loki_server():
     # pylint: disable=R1732
     loki = subprocess.Popen(loki_args)
     return loki
+
 
 def start_promtail(promtail_config):
     """ Function to start Promtail process """
@@ -68,6 +72,7 @@ def start_promtail(promtail_config):
     promtail = subprocess.Popen(promtail_args)
     return promtail
 
+
 def check_ready():
     """ Function to check if Loki is running and in a ready state """
     while True:
@@ -79,10 +84,12 @@ def check_ready():
             time.sleep(10)
             continue
 
+
 def sigterm_handler():
     """ Handler for SIGTERM """
     print("AAP log visualizer is shutting down!")
     sys.exit(0)
+
 
 def main():
     """ Main function to run Grafana, Loki, and Promtail """
@@ -102,6 +109,7 @@ def main():
         except subprocess.SubprocessError as e:
             print("An exception occurred:", str(e))
             sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
