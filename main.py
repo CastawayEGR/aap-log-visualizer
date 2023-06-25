@@ -10,13 +10,7 @@ import requests
 
 def update_promtail_config():
     """ Function to customize promtail config based on file type used """
-    year = os.environ.get("YEAR")
-    if year:
-        config_path = "/opt/promtail/promtail-config-year.yaml"
-        add_year = ['python3', '/opt/add-year-to-logs.py', '-y', year]
-        # pylint: disable=R1732
-        subprocess.Popen(add_year).wait()
-    elif os.path.isdir("/logs/usr/share/zoneinfo"):
+    if os.path.isdir("/logs/usr/share/zoneinfo"):
         template_path = "/opt/promtail/promtail-config.yaml.template"
         config_path = "/opt/promtail/promtail-config.yaml"
         path_pattern = "/logs/usr/share/zoneinfo/*/*"
@@ -34,9 +28,6 @@ def update_promtail_config():
             new_template = template.safe_substitute(timezone=timezone)
             with open(config_path, "w", encoding="utf8") as config_file:
                 config_file.write(new_template)
-    else:
-        config_path = "/opt/promtail/promtail-config.yaml"
-    return config_path
 
 def start_grafana_server():
     """ Function to start Grafana process """
@@ -95,8 +86,8 @@ def main():
     """ Main function to run Grafana, Loki, and Promtail """
     grafana = start_grafana_server()
     loki = start_loki_server()
-
-    promtail_config = update_promtail_config()
+    check_ready()
+    promtail_config = "/opt/promtail/promtail-config.yaml"
     promtail = start_promtail(promtail_config)
 
     signal.signal(signal.SIGTERM, sigterm_handler)
