@@ -1,7 +1,7 @@
 Ansible Automation Platform Log Visualizer
 =========
-[![AAP Log Visualizer CI/CD](https://github.com/CastawayEGR/aap-log-visualizer/actions/workflows/build.yml/badge.svg)](https://github.com/CastawayEGR/aap-log-visualizer/actions/workflows/build.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/CastawayEGR/aap-log-visualizer/actions/workflows/ci.yml/badge.svg)](https://github.com/CastawayEGR/aap-log-visualizer/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/CastawayEGR/aap-log-visualizer.svg?logoColor=brightgreen)](https://github.com/CastawayEGR/aap-log-visualizer)
 [![GitHub last commit](https://img.shields.io/github/last-commit/CastawayEGR/aap-log-visualizer.svg?logoColor=brightgreen)](https://github.com/CastawayEGR/aap-log-visualizer)
 
@@ -32,7 +32,7 @@ podman run --name aaplv -d -v ./{must-gather/sosreport}_dir:/logs:Z -p 3000:3000
 License
 -------
 
-MIT/BSD
+MIT
 
 Author Information
 ------------------
