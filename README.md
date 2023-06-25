@@ -23,6 +23,12 @@ Build arm64 based image.
 make ARCH=arm64 build
 ~~~
 
+Build image without using make replace ${ARCH} with arm64/amd64.
+
+~~~
+podman build --build-arg TARGETARCH=${ARCH} -t ${APP_NAME} .
+~~~
+
 Run
 ----------------
 
