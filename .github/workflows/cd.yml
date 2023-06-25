@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout repo
         id: checkout-repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -30,7 +30,8 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: quay.io/castawayegr/aap-log-visualizer:latest
