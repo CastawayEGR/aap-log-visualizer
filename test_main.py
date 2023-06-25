@@ -1,4 +1,5 @@
 """ Python tests for main.py """
+# pylint: disable=duplicate-code
 from unittest.mock import mock_open, patch
 import pytest
 from main import (
