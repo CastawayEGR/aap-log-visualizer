@@ -1,6 +1,6 @@
 FROM registry.access.redhat.com/ubi9/ubi:latest as base
 
-ARG TARGETARCH=amd64
+ARG TARGETARCH
 
 ENV GRAFANA_VERSION=9.4.3
 ENV LOKI_VERSION=2.7.4
