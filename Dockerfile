@@ -1,4 +1,4 @@
-FROM ubi9/ubi:latest as base
+FROM registry.access.redhat.com/ubi9/ubi:latest as base
 
 ARG TARGETARCH=amd64
 
