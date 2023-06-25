@@ -3,7 +3,7 @@ APP_NAME := aap-log-visualizer
 ARCH ?= amd64
 # Build docker image
 build:
-	@podman build --build-arg ARCH=${ARCH} -t ${APP_NAME} .
+	@podman build --build-arg TARGETARCH=${ARCH} -t ${APP_NAME} .
 # Start an aap troubleshooter container
 run:
 	@podman rm -f aaplv && podman run --name aaplv -d -v ../logs:/logs:Z -p 3000:3000 localhost/${APP_NAME}
