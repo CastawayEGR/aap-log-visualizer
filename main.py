@@ -11,19 +11,19 @@ import requests
 
 def update_promtail_config():
     """ Function to customize promtail config based on file type used """
+    template_path = "/opt/promtail/promtail-config.yaml.template"
+    config_path = "/opt/promtail/promtail-config.yaml"
+    timezone = "America/New_York"
+
     if os.path.isdir("/logs/usr/share/zoneinfo"):
-        template_path = "/opt/promtail/promtail-config.yaml.template"
-        config_path = "/opt/promtail/promtail-config.yaml"
         path_pattern = "/logs/usr/share/zoneinfo/*/*"
         matching_paths = glob.glob(path_pattern)
 
         for path in matching_paths:
             directory, filename = path.rsplit("/", 2)[-2:]
 
-    if directory and filename:
-        timezone = f"{directory}/{filename}"
-    else:
-        timezone = "America/New_York"
+        if directory and filename:
+            timezone = f"{directory}/{filename}"
 
     with open(template_path, "r", encoding="utf8") as template_file:
         template_content = template_file.read()
