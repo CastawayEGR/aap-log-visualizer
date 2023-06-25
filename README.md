@@ -1,6 +1,7 @@
 Ansible Automation Platform Log Visualizer
 =========
 [![CI](https://github.com/CastawayEGR/aap-log-visualizer/actions/workflows/ci.yml/badge.svg)](https://github.com/CastawayEGR/aap-log-visualizer/actions/workflows/ci.yml)
+[![CD](https://github.com/CastawayEGR/aap-log-visualizer/actions/workflows/cd.yml/badge.svg)](https://github.com/CastawayEGR/aap-log-visualizer/actions/workflows/cd.yml)
 [![MIT License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/CastawayEGR/aap-log-visualizer.svg?logoColor=brightgreen)](https://github.com/CastawayEGR/aap-log-visualizer)
 [![GitHub last commit](https://img.shields.io/github/last-commit/CastawayEGR/aap-log-visualizer.svg?logoColor=brightgreen)](https://github.com/CastawayEGR/aap-log-visualizer)
