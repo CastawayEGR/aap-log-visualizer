@@ -32,7 +32,7 @@ def update_promtail_config():
     with open(config_path, "w", encoding="utf8") as config_file:
         config_file.write(new_template)
 
-    return config_path 
+    return config_path
 
 
 def start_grafana_server():
