@@ -32,7 +32,7 @@ Run prebuilt image from Quay.io.
 podman run --name aaplv -d -v ./{must-gather/sosreport}_dir:/logs:Z -p 3000:3000 quay.io/castawayegr/aap-log-visualizer:latest
 ~~~
 
-Run locally build image using Makefile.
+Run locally built image using build section from above.
 
 ~~~
 podman run --name aaplv -d -v ./{must-gather/sosreport}_dir:/logs:Z -p 3000:3000 localhost:/aap-log-visualizer:latest
