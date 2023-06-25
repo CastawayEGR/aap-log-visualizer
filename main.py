@@ -22,7 +22,7 @@ def update_promtail_config():
     if directory and filename:
         timezone = f"{directory}/{filename}"
     else:
-        timzone = "America/New_York"
+        timezone = "America/New_York"
 
     with open(template_path, "r", encoding="utf8") as template_file:
         template_content = template_file.read()
