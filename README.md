@@ -23,10 +23,10 @@ Build linux arm64 based image.
 make ARCH=arm64 build
 ~~~
 
-Build image without using make replace ${PLATFORM with linux/darwin and ${ARCH} with arm64/amd64.
+Build image without using make replace ${OS} with linux/darwin and ${ARCH} with arm64/amd64.
 
 ~~~
-podman build --build-arg TARGETARCH=${ARCH} --build-arg TARGETPLATFORM=${PLATFORM} -t ${APP_NAME} .
+podman build --build-arg TARGETARCH=${ARCH} --build-arg TARGETOS=${OS} -t ${APP_NAME} .
 ~~~
 
 Run
