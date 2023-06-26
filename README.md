@@ -23,6 +23,12 @@ Build linux arm64 based image.
 make ARCH=arm64 build
 ~~~
 
+Build linux arm64 based image with docker.
+
+~~~
+make CONTAINER_RUNTIME=docker ARCH=arm64 build
+~~~
+
 Build image without using make replace ${OS} with linux/darwin and ${ARCH} with arm64/amd64.
 
 ~~~
@@ -42,6 +48,18 @@ Run locally built image using build section from above.
 
 ~~~
 podman run --name aaplv -d -v ./{must-gather/sosreport}_dir:/logs:Z -p 3000:3000 localhost:/aap-log-visualizer:latest
+~~~
+
+Run locally built image using using the default log path
+
+~~~
+make run
+~~~
+
+Run locally built image using using custom path and docker
+
+~~~
+make CONTAINER_RUNTIME=docker LOGS_PATH=/tmp/{must-gather/sosreport}_dir run
 ~~~
 
 License
