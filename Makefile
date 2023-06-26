@@ -1,12 +1,13 @@
 # Variables
 APP_NAME := aap-log-visualizer
 ARCH ?= amd64
+PLATFORM ?= linux
 # Run tests against code using pylint, flake8, and pytest
 tests:
 	@pylint --rcfile=.pylintrc *.py && flake8 --max-line-length=100 *.py && pytest
 # Build docker image
 build:
-	@podman build --build-arg TARGETARCH=${ARCH} -t ${APP_NAME} .
+	@podman build --build-arg TARGETARCH=${ARCH} --build-arg TARGETPLATFORM=${PLATFORM} -t ${APP_NAME} .
 # Start an aap troubleshooter container
 run:
 	@podman rm -f aaplv && podman run --name aaplv -d -v ../logs:/logs:Z -p 3000:3000 localhost/${APP_NAME}

@@ -108,7 +108,7 @@ def test_start_loki_server():
 
         # Verify that the appropriate arguments were passed to subprocess.Popen
         mock_popen.assert_called_with([
-            "/opt/loki/loki-linux",
+            "/opt/loki/loki-server",
             "--config.file",
             "/opt/loki/loki-local-config.yaml",
         ])
@@ -129,7 +129,7 @@ def test_start_promtail():
 
         # Verify that the appropriate arguments were passed to subprocess.Popen
         mock_popen.assert_called_with([
-            "/opt/promtail/promtail-linux",
+            "/opt/promtail/promtail-agent",
             "-config.file",
             promtail_config,
         ])

@@ -11,22 +11,22 @@ Repository for multi-arch all-in-one container images that contains Grafana, Lok
 Build
 ------------
 
-Build amd64 based image.
+Build linux amd64 based image.
 
 ~~~
 make build
 ~~~
 
-Build arm64 based image.
+Build linux arm64 based image.
 
 ~~~
 make ARCH=arm64 build
 ~~~
 
-Build image without using make replace ${ARCH} with arm64/amd64.
+Build image without using make replace ${PLATFORM with linux/darwin and ${ARCH} with arm64/amd64.
 
 ~~~
-podman build --build-arg TARGETARCH=${ARCH} -t ${APP_NAME} .
+podman build --build-arg TARGETARCH=${ARCH} --build-arg TARGETPLATFORM=${PLATFORM} -t ${APP_NAME} .
 ~~~
 
 Run

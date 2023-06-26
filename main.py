@@ -54,7 +54,7 @@ def start_grafana_server():
 def start_loki_server():
     """ Function to start Loki process """
     loki_args = [
-        "/opt/loki/loki-linux",
+        "/opt/loki/loki-server",
         "--config.file",
         "/opt/loki/loki-local-config.yaml",
     ]
@@ -66,7 +66,7 @@ def start_loki_server():
 def start_promtail(promtail_config):
     """ Function to start Promtail process """
     promtail_args = [
-        "/opt/promtail/promtail-linux",
+        "/opt/promtail/promtail-agent",
         "-config.file",
         promtail_config,
     ]
