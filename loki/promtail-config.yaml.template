@@ -9,7 +9,7 @@ clients:
   - url: http://localhost:3100/loki/api/v1/push
 
 scrape_configs:
-
+# must-gather logs
 - job_name: pod
   pipeline_stages:
     - match:
@@ -34,6 +34,7 @@ scrape_configs:
       job: pod-logs
       __path__: /logs/registry-redhat*/namespaces/*/pods/*/*/*/logs/*.log
 
+# sosreport logs
 - job_name: nginx
   pipeline_stages:
     - regex:
@@ -66,6 +67,21 @@ scrape_configs:
       __path__: /logs/var/log/tower/tower*.log*
       __path_exclude__: /logs/var/log/tower/job_lifecycle*
 
+- job_name: receptor
+  pipeline_stages:
+    - regex:
+        expression: '(?P<time>\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}:\d{2})'
+    - timestamp:
+        format: 2006/01/02 15:04:05
+        source: time
+        location: $timezone
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: receptor-logs
+      __path__: /logs/var/log/receptor/receptor*.log*
+
 - job_name: job
   pipeline_stages:
     - json:
@@ -81,7 +97,37 @@ scrape_configs:
       job: job-logs
       __path__: /logs/var/log/tower/job_lifecycle*
 
-- job_name: uwsgi
+- job_name: supervisord
+  pipeline_stages:
+    - regex:
+        expression: '^(?P<time>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3})'
+    - timestamp:
+        format: 2006-01-02 15:04:05,999
+        source: time
+        location: $timezone
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: supervisord-logs
+      __path__: /logs/var/log/supervisor/supervisord.log*
+
+- job_name: supervisor-daphne
+  pipeline_stages:
+    - regex:
+        expression: '^(?P<time>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3})'
+    - timestamp:
+        format: 2006-01-02 15:04:05,999
+        source: time
+        location: $timezone
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: supervisor-daphne-logs
+      __path__: /logs/var/log/supervisor/awx-daphne.log*
+
+- job_name: supervisor-uwsgi
   pipeline_stages:
     - regex:
         expression: '\[(?P<time>\w+\s+\w+\s+\d+\s+\d{2}:\d{2}:\d{2}\s+\d{4})\]'
@@ -93,5 +139,5 @@ scrape_configs:
   - targets:
       - localhost
     labels:
-      job: uwsgi-logs
-      __path__: /logs/var/log/supervisor/*.log*
+      job: supervisor-uwsgi-logs
+      __path__: /logs/var/log/supervisor/awx-uwsgi.log*
