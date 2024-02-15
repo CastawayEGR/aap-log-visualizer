@@ -31,6 +31,6 @@ COPY --from=base /opt /opt
 RUN mkdir /logs &&\
 	chgrp -R 0 /{opt,logs} &&\
 	chmod -R g=u /{opt,logs} 
-USER 1000
+#USER 1000
 EXPOSE 3000 3100
 CMD ["python3", "/opt/main.py"]
