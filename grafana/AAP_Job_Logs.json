@@ -30,7 +30,6 @@
   "panels": [
     {
       "datasource": {
-        "type": "loki",
         "uid": "${datasource}"
       },
       "gridPos": {
@@ -53,7 +52,6 @@
       "targets": [
         {
           "datasource": {
-            "type": "loki",
             "uid": "${datasource}"
           },
           "editorMode": "code",
