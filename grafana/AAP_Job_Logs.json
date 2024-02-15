@@ -55,7 +55,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "{job=\"pod-logs\"} |=\"job-$jobID\"",
+          "expr": "{job=\"pod-logs\"} |~\"job-$jobID|job $jobID\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -117,7 +117,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "AAP - Job Logs Dashboard",
+  "title": "AAP - Job Logs",
   "uid": "R-k-lQ2Iz",
   "version": 1,
   "weekStart": ""
