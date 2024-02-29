@@ -25,7 +25,7 @@
           "uid": "${datasource}"
         },
         "enable": true,
-        "expr": "{$label_name=~\"$label_value\", job=~\"$job\", instance=~\"$instance\"}|=\"ERROR\" != \"slack\"",
+        "expr": "{$label_name=~\"$label_value\", job=~\"$job\", instance=~\"$instance\"}|=\"ERROR\" ",
         "iconColor": "red",
         "instant": false,
         "name": "Errors",
@@ -1709,6 +1709,57 @@
         }
       ],
       "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "id": 35,
+      "panels": [],
+      "title": "Raw Logs",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${datasource}"
+      },
+      "gridPos": {
+        "h": 27,
+        "w": 24,
+        "x": 0,
+        "y": 43
+      },
+      "id": 37,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "expr": "{$label_name=~\"$label_value\", job=~\"$job\", instance=~\"$instance\"}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "All Pod Logs",
+      "type": "logs"
     }
   ],
   "refresh": false,
@@ -1765,9 +1816,13 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "uid": "$datasource"
@@ -1791,9 +1846,13 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "uid": "$datasource"
@@ -1817,9 +1876,13 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "uid": "$datasource"
@@ -1855,8 +1918,8 @@
     ]
   },
   "time": {
-    "from": "2024-02-07T07:53:08.674Z",
-    "to": "2024-02-07T17:35:12.343Z"
+    "from": "2024-02-07T10:53:02.226Z",
+    "to": "2024-02-07T17:41:01.587Z"
   },
   "timepicker": {
     "refresh_intervals": [
