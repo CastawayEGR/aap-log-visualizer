@@ -24,7 +24,7 @@
           "type": "loki",
           "uid": "${datasource}"
         },
-        "enable": true,
+        "enable": false,
         "expr": "{$label_name=~\"$label_value\", job=~\"$job\", instance=~\"$instance\"}|=\"ERROR\" ",
         "iconColor": "red",
         "instant": false,
@@ -943,8 +943,8 @@
         ]
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 9,
+        "w": 8,
         "x": 0,
         "y": 19
       },
@@ -976,6 +976,99 @@
         }
       ],
       "title": "Log level over time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 19
+      },
+      "id": 39,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "expr": "quantile_over_time(0.99, {$label_name=~\"$label_value\", job=~\"$job\", instance=~\"$instance\"} |=\"generated\" | regexp `\\b(?P<method>\\w+)\\s+(?P<uri>\\/[^?\\s]+)\\s.*?(?P<response_time>\\d+)\\s+msecs` | unwrap response_time | __error__=\"\" [1m]) by (uri)",
+          "legendFormat": "{{uri}}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Response time by API endpoint (P99)",
       "type": "timeseries"
     },
     {
@@ -1102,9 +1195,9 @@
         ]
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
+        "h": 9,
+        "w": 8,
+        "x": 16,
         "y": 19
       },
       "id": 2,
@@ -1147,7 +1240,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 28
       },
       "id": 28,
       "panels": [],
@@ -1229,7 +1322,7 @@
         "h": 6,
         "w": 9,
         "x": 0,
-        "y": 28
+        "y": 29
       },
       "id": 6,
       "maxDataPoints": 1,
@@ -1364,7 +1457,7 @@
         "h": 6,
         "w": 15,
         "x": 9,
-        "y": 28
+        "y": 29
       },
       "id": 7,
       "maxDataPoints": 1,
@@ -1512,7 +1605,7 @@
         "h": 8,
         "w": 9,
         "x": 0,
-        "y": 34
+        "y": 35
       },
       "id": 3,
       "maxDataPoints": 1,
@@ -1644,7 +1737,7 @@
         "h": 8,
         "w": 15,
         "x": 9,
-        "y": 34
+        "y": 35
       },
       "id": 12,
       "maxDataPoints": 1,
@@ -1661,7 +1754,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Requests"
+            "displayName": "Total"
           }
         ]
       },
@@ -1716,7 +1809,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 43
       },
       "id": 35,
       "panels": [],
@@ -1732,7 +1825,7 @@
         "h": 27,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 44
       },
       "id": 37,
       "options": {
@@ -1918,8 +2011,8 @@
     ]
   },
   "time": {
-    "from": "2024-02-07T10:53:02.226Z",
-    "to": "2024-02-07T17:41:01.587Z"
+    "from": "now-30d",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -1935,7 +2028,7 @@
     ]
   },
   "timezone": "",
-  "title": "AAP - Web Container Logs",
+  "title": "AAP - Container Logs",
   "uid": "Nz6kKgtGj",
   "version": 1,
   "weekStart": ""
