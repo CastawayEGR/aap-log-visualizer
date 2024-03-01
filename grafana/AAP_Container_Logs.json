@@ -266,7 +266,7 @@
           "refId": "A"
         }
       ],
-      "title": "NGINX logs in bytes",
+      "title": "Logs in bytes",
       "type": "stat"
     },
     {
@@ -434,7 +434,7 @@
           "refId": "A"
         }
       ],
-      "title": "# NGINX log lines",
+      "title": "Log lines",
       "type": "stat"
     },
     {
