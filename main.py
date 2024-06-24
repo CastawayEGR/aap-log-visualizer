@@ -22,8 +22,8 @@ def update_promtail_config():
         for path in matching_paths:
             directory, filename = path.rsplit("/", 2)[-2:]
 
-        if directory and filename:
-            timezone = f"{directory}/{filename}"
+            if directory and filename:
+                timezone = f"{directory}/{filename}"
 
     with open(template_path, "r", encoding="utf8") as template_file:
         template_content = template_file.read()
