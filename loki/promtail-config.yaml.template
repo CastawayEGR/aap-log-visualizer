@@ -141,3 +141,18 @@ scrape_configs:
     labels:
       job: supervisor-uwsgi-logs
       __path__: /logs/var/log/supervisor/awx-uwsgi.log*
+
+- job_name: messages
+  pipeline_stages:
+    - regex:
+        expression: '^(?P<time>\w+\s+\d+\s+\d{2}:\d{2}:\d{2})'
+    - timestamp:
+        format: Jan 2 15:04:05
+        source: time
+        location: $timezone
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: messages-logs
+      __path__: /logs/var/log/messages*
